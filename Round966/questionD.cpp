@@ -2,6 +2,8 @@
 #include<algorithm>
 using namespace std;
 
+void debugArr(vector<int>& arr) {for(auto ele : arr) cout << ele << " ";}
+
 int main(){
     int t;
     cin>>t;
@@ -12,36 +14,27 @@ int main(){
         for(int i = 0; i<n; i++){
             cin >> arr[i];
         }
+        vector<int>prefix(n + 1);
+        prefix[0] = 0;
+        for(int i = 0; i<=n; i++) {
+            prefix[i + 1] += prefix[i] + arr[i];
+        }
         string s;
         cin >> s;
-        int rights = 0;
-        int lefts = 0;
-        for(int i = 0; i<n; i++) {
-            if(s[i] == 'R') {
-                rights++;
-            } else {
-                lefts++;
-            }
-        }
-        int skipRights = 0;
-        if(rights > lefts) {
-            skipRights = rights - lefts;
-        }
+        int l = 0;
+        int r = n - 1;
         int ans = 0;
-        int multiplier = 0;
-        for(int i = 0; i<n; i++) {
-            if(s[i] == 'L') {
-                if(multiplier < rights)
-                multiplier++;
-                ans += arr[i] * multiplier;
-            } else if (s[i] == 'R'){
-                ans += arr[i] * multiplier;
-                if(skipRights > 0) skipRights--;
-                else if(skipRights == 0){ 
-                    rights--;
-                    multiplier--;
-                }
+        while(l < r) {
+            while(s[l] != 'L') {
+                l++;
             }
+            while(s[r] != 'R') {
+                r--;
+            }
+            if(l>=r) break;
+            ans += prefix[r + 1] - prefix[l];
+            l++;
+            r--;
         }
         cout << ans << endl;
     }
