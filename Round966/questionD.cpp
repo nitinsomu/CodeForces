@@ -1,34 +1,34 @@
 #include<bits/stdc++.h>
 #include<algorithm>
 using namespace std;
-
-void debugArr(vector<int>& arr) {for(auto ele : arr) cout << ele << " ";}
+#define ll long long
+void debugArr(vector<ll>& arr) {for(auto ele : arr) cout << ele << " ";}
 
 int main(){
-    int t;
+    ll t;
     cin>>t;
     while(t--){
-        int n;
+        ll n;
         cin >> n;
-        vector<int>arr(n);
-        for(int i = 0; i<n; i++){
+        vector<ll>arr(n);
+        for(ll i = 0; i<n; i++){
             cin >> arr[i];
         }
-        vector<int>prefix(n + 1);
+        vector<ll>prefix(n + 1);
         prefix[0] = 0;
-        for(int i = 0; i<=n; i++) {
-            prefix[i + 1] += prefix[i] + arr[i];
+        for(ll i = 0; i<n; i++) {
+            prefix[i + 1] = prefix[i] + arr[i];
         }
         string s;
         cin >> s;
-        int l = 0;
-        int r = n - 1;
-        int ans = 0;
+        ll l = 0;
+        ll r = n - 1;
+        ll ans = 0;
         while(l < r) {
-            while(s[l] != 'L') {
+            while(l < n && s[l] != 'L') {
                 l++;
             }
-            while(s[r] != 'R') {
+            while(r >=0 && s[r] != 'R') {
                 r--;
             }
             if(l>=r) break;
